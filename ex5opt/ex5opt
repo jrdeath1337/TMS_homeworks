@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+read -p "Type directory to searching all files: " dir
+
+for file in $(find "$dir" -type f)
+do 
+	name="$(stat -c%n "$file")"
+	per="$(stat -c%A "$file")"
+	size="$(stat -c%s "$file")"
+	printf "%s %-10s %s\n" "$size" "$per" "$name"
+	done
