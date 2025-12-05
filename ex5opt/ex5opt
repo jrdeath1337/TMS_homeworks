@@ -1,11 +1,24 @@
 #!/usr/bin/bash
 
 read -p "Type directory to searching all files: " dir
+read -p "Full format (1) or short format (2): " format
 
-for file in $(find "$dir" -type f)
-do 
-	name="$(stat -c%n "$file")"
-	per="$(stat -c%A "$file")"
-	size="$(stat -c%s "$file")"
-	printf "%s %-10s %s\n" "$size" "$per" "$name"
-	done
+case $format in 
+1)
+	for file in $(find "$dir" -type f)
+	do 
+		name="$(stat -c%n "$file")"
+		per="$(stat -c%A "$file")"
+		size="$(stat -c%s "$file" | numfmt --to=iec-i)"
+		printf "%s %-10s %s\n" "$size" "$per" "$name"
+	done ;;
+2)
+	printf "*---SIZE---*---PERM---*-----------------------------NAME------------------------------------*\n"
+	for file in $(find "$dir" -type f)
+	do 
+		name="$(stat -c%n "$file" 2>/dev/null)"
+		per="$(stat -c%A "$file" 2>/dev/null)"
+		size="$(stat -c%s "$file" 2>/dev/null | numfmt --to=iec-i)"
+		printf "%-10.10s %-10.10s %-30.70s/n" "$size" "$per" "$name"
+	done ;;
+esac
