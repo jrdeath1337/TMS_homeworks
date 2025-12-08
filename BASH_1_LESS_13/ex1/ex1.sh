@@ -1,12 +1,13 @@
 #!/usr/bin/bash
 
-read -p "type dir:" dir
-read -p "Choose option log files(1), Py files(2): " option
+read -p "Choose directory: " dir
+read -p "Choose extension: " ext
+read -p "Choose option timestamp(1), git hesh(2): " option
 
 case $option in
 
 	1)
-	for file in $(find "$dir"/*.log -type f 2>/dev/null); do
+	for file in $(find "$dir" -maxdepth 1 -name -type f ."$ext"  f 2>/dev/null); do
 		if [ -f "$file" ]; then
 
         		timestamp=$(stat -c %Y "$file")
@@ -24,7 +25,7 @@ case $option in
 	done;;
 
 	2)
-	for file in $(find "$dir"/*.py -type f 2>/dev/null); do
+	for file in $(find "$dir" -name \."$ext" -maxdepth -1 -type f 2>/dev/null); do
 		if [ -f "$file" ]; then
 
         		githash=$(git log -1 --format="%h")
