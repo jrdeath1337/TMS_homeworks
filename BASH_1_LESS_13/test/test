@@ -1,22 +1,42 @@
 #!/bin/bash
 
+read -p "Choose option log files(1), Py files(2)"
 read -p "type dir:" dir
 
-for file in $(find "$dir"/*.log -type f 2>/dev/null); do
-	if [ -f "$file" ]; then
+case option in
 
-        	timestamp=$(stat -c %Y "$file")
-        	formatted_timestamp=$(date -d "@$timestamp" +"%Y%m%d_%H%M%S")
+	1)
+	for file in $(find "$dir"/*.log -type f 2>/dev/null); do
+		if [ -f "$file" ]; then
 
-        	name="${file%.*}"
-    	   	ext="${file##*.}"
+        		timestamp=$(stat -c %Y "$file")
+        		formatted_timestamp=$(date -d "@$timestamp" +"%Y%m%d_%H%M%S")
 
-   	 	new_name="${name}_${formatted_timestamp}.${ext}"
+        		name="${file%.*}"
+    	   		ext="${file##*.}"
 
- #  	 	mv "$file" "$new_name"
-  	 	echo "Переименован: $file -> $new_name"
-		echo "$new_file"
-	fi
-done
+   	 		new_name="${name}_${formatted_timestamp}.${ext}"
 
+   	 		mv "$file" "$new_name"
+  	 		echo "Переименован: $file -> $new_name"
+			echo "$new_file"
+		fi
+	done ;;
 
+	2)
+	for file in $(find "$dir"/*.py -type f 2>/dev/null); do
+		if [ -f "$file" ]; then
+
+        		githash=$(git log --format="%H")
+
+        		name="${file%.*}"
+    	   		ext="${file##*.}"
+
+   	 		new_name="${name}.${ext}_$githash"
+
+   	 		mv "$file" "$new_name"
+  	 		echo "Переименован: $file -> $new_name"
+			echo "$new_file"
+		fi
+	done ;;
+esac
