@@ -1,0 +1,23 @@
+   
+#!/usr/bin/bash
+set -x
+read -p "type dir:" dir
+
+
+        for file in $(find "$dir"/*.log -type f 2>/dev/null); do
+                if [ -f "$file" ]; then
+
+                        timestamp=$(stat -c %Y "$file")
+                        formatted_timestamp=$(date -d "@$timestamp" +"%Y%m%d_%H%M%S")
+
+                        name="${file%.*}"
+                        ext="${file##*.}"
+
+                        new_name="${name}_${formatted_timestamp}.${ext}"
+
+#                       mv "$file" "$new_name"
+                        echo "Переименован: $file -> $new_name"
+                        echo "$new_file"
+                fi
+        done
+
