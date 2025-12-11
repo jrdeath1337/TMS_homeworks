@@ -1,0 +1,76 @@
+Приветствую, коллеги!
+
+Пожалуйста, отправьте отчеты на следующие адреса:
+john.doe@company.com, mary.smith123@corporate.org и support@service-center.net.
+Также можно написать на адрес info+spam@newsletter.example.com или
+добавить в копию project.manager@subdomain.division.company.co.uk.
+
+Для срочных вопросов используйте emergency@alert-system-24-7.io,
+а для общих вопросов - general_inquiries@public-domain.info.
+
+Обратите внимание, что некоторые адреса могут быть некорректными:
+.user@bad-start.com начинается с точки, а user.@bad-end.com
+заканчивается точкой в локальной части. Также проблематичен
+double..dots@invalid.com с двумя точками подряд и
+multiple@@at@signs.com с несколькими символами @.
+
+Не забывайте проверять адреса вроде comma,problem@domain.com
+с запятыми или plus+too+many@plus.com с несколькими плюсами.
+Особенно подозрительны адреса типа hyphen-start@-domain.com
+с дефисом в начале домена или @no-local-part.com без локальной части.
+
+В документации встретились странные форматы:
+quoted"user"@old-system.example (не поддерживается нашим валидатором),
+unicode_üser@dömäin.de с не-ASCII символами и
+very-long-local-part-that-exceeds-sixty-four-characters@short.domain
+с слишком длинной локальной частью.
+
+Кроме того, есть домены с проблемами:
+valid-user@domain-with-multiple-hyphens--in-row.com,
+test@domain..with-double-dots.com и
+another@.domain-starting-with-dot.net.
+
+Для тестирования граничных случаев используйте:
+minimal@a.b (короткий домен),
+normal.user@subdomain.example.com,
+user+tag+filter+alias@google-mail.com,
+and-dash@domain-with-dashes-example.io.
+
+Из архивов достали старые адреса:
+first.last@[192.168.1.1] (IP вместо домена),
+"spaced name"@old-standards.edu (с пробелами в кавычках),
+и совсем экзотический !#$%&'*+-/=?^_`{}|~@all-symbols-allowed.xyz.
+
+Проверьте также кейсы с точками в домене:
+trailing.dot@domain.com. (точка в конце домена),
+@missing-local.com (отсутствует локальная часть),
+user@ (отсутствует домен),
+и просто строка @ (только символ).
+
+Для отладки регулярных выражений полезны адреса:
+very."(),:;<>[]".VERY."very@\very".unusual@strange.example.com
+admin@mailserver1 (локальный домен без точки),
+example@localhost (зарезервированный домен).
+
+И несколько дубликатов для проверки сортировки:
+duplicate@example.com, DUPLICATE@EXAMPLE.COM, Duplicate@Example.com
+(все три должны быть приведены к одному после сортировки).
+
+Также обратите внимание на длинные домены:
+user@subdomain.another.sub.yet.another.and.another.and.more.and.more.and.this.is.actually.a.valid.domain.if.it.does.not.exceed.two.hundred.and.fifty.five.characters.which.is.quite.long.but.technically.possible.according.to.rfc.standards.example.com
+
+И недопустимо длинный:
+user@this.domain.name.is.way.too.long.because.it.has.more.than.two.hundred.and.fifty.five.characters.which.is.not.allowed.by.rfc.standards.even.though.it.might.look.correct.but.actually.should.be.rejected.by.any.email.validation.that.follows.the.specification.properly.and.we.need.to.make.sure.that.our.validator.catches.such.cases.correctly.example.com
+
+В конце обычный текст без email, чтобы проверить что скрипт не ломается.
+
+С уважением,
+Команда разработки
+contact@test-validation.dev
+peter.johnson+newsletter@data-center-01.prod.company.com
+a.n.other-example@multiple-sub.domains.co.uk
+
+P.S. Последний тест: mixed@case.DoMaIn.CoM должен нормализоваться при сравнении,
+а вот invalid@-hyphen-start.com и invalid@hyphen-end-.com должны отсеиваться.
+
+Вот такая подборка для тестирования! Удачи в валидации!
