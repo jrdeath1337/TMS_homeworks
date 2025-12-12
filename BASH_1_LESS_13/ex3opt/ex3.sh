@@ -1,4 +1,8 @@
-#!/usr/bin/baаем адреса из текста с помощью grep 
+#!/usr/bin/bash
+
+read -p "Choose text file or type email: " textfile
+
+grep -o -E '[a-zA-Z0-9.,+\-]+@[a-zA-Z0-9.\-]+' "$textfile" | awk ' #Вытаскиваем адреса из текста с помощью grep 
 {
     email = $0 #Email вся строка
     if (email ~ /\.\./) next #Если есть 2 точки идем дальше
