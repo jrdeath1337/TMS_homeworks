@@ -10,7 +10,7 @@ mkdir -p /home/jrdeath/logs &&\
 chown -R jrdeath:jrdeath /home/jrdeath &&\ 
 chmod +x /home/jrdeath/hello.sh &&\
 apk update && apk upgrade &&\
-  apk add --no-cache git nano nginx && rm -r /var/cache/apk/* 
+  apk add --no-cache git nano vim && rm -r /var/cache/apk/* 
 
 WORKDIR /home/jrdeath/
 VOLUME /home/jrdeath/logs
