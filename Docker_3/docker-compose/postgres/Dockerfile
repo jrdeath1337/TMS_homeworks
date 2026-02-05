@@ -1,0 +1,6 @@
+FROM postgres:latest
+ENV POSTGRES_USER tms
+ENV POSTGRES_PASSWORD secret
+ENV POSTGRES_DB tms_db
+EXPOSE 5432
+CMD ["postgres"]
