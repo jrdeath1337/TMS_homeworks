@@ -1,6 +1,6 @@
 #Просто выберите задание для проверки по его номеру в ДЗ
-exersice = int(input("4 - hello\n5 - a+b\n6 - name\n7 - for(1-10)\n8 - age\n9 - a*b\n10 - first letter\n11 - squared\n12 - multiplication table\n13 - average\nSelect exersice: "))
-match exersice:
+exercise = int(input("4 - hello\n5 - a+b\n6 - name\n7 - for(1-10)\n8 - age\n9 - a*b\n10 - first letter\n11 - squared\n12 - multiplication table\n13 - average\nSelect exersice: "))
+match exercise:
     case 4:
         print("info: Greetings with user")
         import os
