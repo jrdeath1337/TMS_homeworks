@@ -1,6 +1,7 @@
 import os
 import re
 import string
+import array
 
 exercise = int(input("Выберите номер задания для проверки: "))
 match exercise:
@@ -24,4 +25,23 @@ match exercise:
         digital_char = "".join([dig_char for dig_char in cli_input if dig_char.isdigit()])
         punctuation_char = "".join([punc_char for punc_char in cli_input if punc_char in string.punctuation])
         print(f"Upper character text: {upper_char}\n Character count: ", len(upper_char), f"\nLower character text: {lower_char}\n Character count: ", len(lower_char), f"\nDigital character: {digital_char}\n Character count: ", len(digital_char), f"\nPunctuation character: {punctuation_char}\n Character count: ", len(punctuation_char))
+
+    case 3:
+        input_1 = input("Enter first list: ")
+        list_1 = input_1.split()
+        input_2 = input("Enter second list: ")
+        list_2 = input_2.split()
+        print(list_1, list_2)
+
+    case 4:
+        input_3 = input("Enter first list: ")
+        sepnum_1 = input_3.split()
+        num_1 = [int(x) for x in sepnum_1]
+        array_1 = array.array('i', sorted(num_1, reverse=True))
+        input_4 = input("Enter second list: ")
+        sepnum_2 = input_4.split()
+        num_2 = [int(x) for x in sepnum_2]
+        array_2 = array.array('i', sorted(num_2, reverse=True))
+        print(array_1, array_2)
+
 
