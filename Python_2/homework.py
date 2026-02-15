@@ -43,5 +43,10 @@ match exercise:
         num_2 = [int(x) for x in sepnum_2]
         array_2 = array.array('i', sorted(num_2, reverse=True))
         print(array_1, array_2)
+    
+    case 5: 
+        input_5 = input("Enter data: ")
+        sep_imput = tuple(input_5.split())
+        print(sep_imput)
 
 
