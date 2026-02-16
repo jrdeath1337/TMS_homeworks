@@ -68,3 +68,8 @@ match exercise:
         else:
             print("Don't found file or directory")
 
+    case 7:
+        str_1 = input("input first string: ")
+        str_2 = input("input second string: ")
+        common = set(str_1) & set(str_2)  
+        print(f"Similar character: {common}")
