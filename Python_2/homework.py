@@ -18,6 +18,7 @@ match exercise:
                 else:
                     with open('access_adresses.log', 'a', encoding='utf-8') as log:
                         log.write(f"Adress: {ip_ping} NOT ACCESS\n")
+    
     case 2:
         cli_input = input("Enter string: ")
         upper_char = "".join([up_char for up_char in cli_input if up_char.isupper()])
@@ -47,6 +48,23 @@ match exercise:
     case 5: 
         input_5 = input("Enter data: ")
         sep_imput = tuple(input_5.split())
-        print(sep_imput)
+        if len(sep_imput) == len(set(sep_imput)):
+            print(f"{sep_imput} - This tumple don't have duplicate")
+        else:
+            print(f"{sep_imput} - This tumple have duplicate ")
 
+    case 6:
+        dir_path = input("Enter dir path: ")
+        grep_word = input("Enter text for searh: ")
+        if os.path.exists(dir_path):
+            files = set(os.listdir(dir_path))
+            for grep_files in files:
+                full_path = os.path.join(dir_path, grep_files)
+                if os.path.isfile(full_path):
+                    grep_sh = os.system(f"grep -i {grep_word} {full_path}")
+                    print(grep_files, grep_sh)
+                    if grep_sh != 0:
+                        print("ERROR - text don't found")
+        else:
+            print("Don't found file or directory")
 
