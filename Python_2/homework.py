@@ -2,6 +2,7 @@ import os
 import re
 import string
 import array
+import statistics
 
 exercise = int(input("Выберите номер задания для проверки: "))
 match exercise:
@@ -73,3 +74,29 @@ match exercise:
         str_2 = input("input second string: ")
         common = set(str_1) & set(str_2)  
         print(f"Similar character: {common}")
+
+    case 8:
+        input_num = input("Enter numbers: ")
+        sep_num = list(map(int, input_num.split()))
+        print("Median", statistics.median(sep_num))
+    
+    case 9:
+        text = input("Input text: ")
+        vowels = "аеёиоуыэюяАЕЁИОУЫЭЮЯaeiouyAEIOUY" # Список всех гласных (рус + англ)
+        result = ""
+        for char in text:
+            if char in vowels:
+                result += "-"  # Если гласная — подменяем на дефис
+            else:
+                result += char # Если нет — оставляем как было
+            f_result = result
+        print(f"Result: {f_result}")
+
+    case 10:
+        str_1 = input("input first string: ")
+        str_2 = input("input second string: ")
+        common = list(set(str_1) & set(str_2))
+        common1 = list(set(str_1) ^ set(str_2))
+        print(f"Similar character: {common}, Uniq character: {common1}")
+
+
