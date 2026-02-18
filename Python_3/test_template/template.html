@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Приветствие</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f2f5; }
+        .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #1a73e8; }
+        p { color: #5f6368; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+    <div class="card">
+      {%for person in users%}
+      <h1>Hello, {{person.name}}! 👋</h1>
+      <p>Your mail: <strong>{{person.mail}}</strong></p>
+      {%endfor%}
+    </div>
+</body>
+</html>
+
