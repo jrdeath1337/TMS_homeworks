@@ -6,36 +6,41 @@ import statistics
 
 exercise = int(input("Выберите номер задания для проверки: "))
 match exercise:
-    case 1:
+    case 1: #Ping IP-адресов из файла 
         file = input("Enter file name: ")
-        with open(file, 'r', encoding="utf-8") as f:
-            ip_adresses = f.read()
+        with open(file, 'r', encoding="utf-8") as f:  
+            ip_adresses = f.read() 
+            #Ищем подстроки типа (0-999.0-999.0-999.0-999) и убираем дубликаты
             ip_sort = set(re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', ip_adresses))
             for ip_ping in ip_sort:
+                #Запускаем цикл и с помощью os.system делаем ping для каждой найденной подстроки
                 ping_sh = os.system(f"ping -c 1 -W 1 {ip_ping}")
                 if ping_sh == 0:
+                    #Добавляем запись в файл log
                     with open('access_adresses.log', 'a', encoding='utf-8') as log:
-                        log.write(f"Adress: {ip_ping} ACCESS\n")
+                        log.write(f"Adress: {ip_ping} ACCESS\n") 
                 else:
                     with open('access_adresses.log', 'a', encoding='utf-8') as log:
                         log.write(f"Adress: {ip_ping} NOT ACCESS\n")
     
-    case 2:
+    case 2: #Анализ строки
         cli_input = input("Enter string: ")
+        #Генерируем списки и филтруем их по категориям
         upper_char = "".join([up_char for up_char in cli_input if up_char.isupper()])
         lower_char = "".join([low_char for low_char in cli_input if low_char.islower()])
         digital_char = "".join([dig_char for dig_char in cli_input if dig_char.isdigit()])
         punctuation_char = "".join([punc_char for punc_char in cli_input if punc_char in string.punctuation])
-        print(f"Upper character text: {upper_char}\n Character count: ", len(upper_char), f"\nLower character text: {lower_char}\n Character count: ", len(lower_char), f"\nDigital character: {digital_char}\n Character count: ", len(digital_char), f"\nPunctuation character: {punctuation_char}\n Character count: ", len(punctuation_char))
+        #Выводим статистику
+        print(f"Upper character text: {upper_char}\n Character count: ", len(upper_char), f"\nLower character text: {lower_char}\n Character count: ", len(lower_char), f"\nDigital character: {digital_char}\n Character count: ", len(digital_char), f"\nPunctuation character: {punctuation_char}\n Character count: ", len(punctuation_char)) 
 
-    case 3:
+    case 3: #2 списка на вход и вывод символов 
         input_1 = input("Enter first list: ")
         list_1 = input_1.split()
         input_2 = input("Enter second list: ")
         list_2 = input_2.split()
         print(list_1, list_2)
 
-    case 4:
+    case 4: #Сортировка 2-х массивов в порядке убывания 
         input_3 = input("Enter first list: ")
         sepnum_1 = input_3.split()
         num_1 = [int(x) for x in sepnum_1]
@@ -46,7 +51,7 @@ match exercise:
         array_2 = array.array('i', sorted(num_2, reverse=True))
         print(array_1, array_2)
     
-    case 5: 
+    case 5: #Проверка кортежа на дубликаты 
         input_5 = input("Enter data: ")
         sep_imput = tuple(input_5.split())
         if len(sep_imput) == len(set(sep_imput)):
@@ -54,7 +59,7 @@ match exercise:
         else:
             print(f"{sep_imput} - This tumple have duplicate ")
 
-    case 6:
+    case 6: #Поиск подстроки с помощью grep 
         dir_path = input("Enter dir path: ")
         grep_word = input("Enter text for searh: ")
         if os.path.exists(dir_path):
@@ -69,21 +74,21 @@ match exercise:
         else:
             print("Don't found file or directory")
 
-    case 7:
+    case 7: #Пересечение множеств 
         str_1 = input("input first string: ")
         str_2 = input("input second string: ")
         common = set(str_1) & set(str_2)  
         print(f"Similar character: {common}")
 
-    case 8:
+    case 8: #Вычисление медианы 
         input_num = input("Enter numbers: ")
         sep_num = list(map(int, input_num.split()))
         print("Median", statistics.median(sep_num))
     
-    case 9:
+    case 9: #Замена всех гласных на дефис
         text = input("Input text: ")
         vowels = "аеёиоуыэюяАЕЁИОУЫЭЮЯaeiouyAEIOUY" # Список всех гласных (рус + англ)
-        result = ""
+        result = "" #result идет как буфер для текста 
         for char in text:
             if char in vowels:
                 result += "-"  # Если гласная — подменяем на дефис
@@ -92,11 +97,11 @@ match exercise:
             f_result = result
         print(f"Result: {f_result}")
 
-    case 10:
+    case 10: #Операции над множеством 
         str_1 = input("input first string: ")
         str_2 = input("input second string: ")
-        common = list(set(str_1) & set(str_2))
-        common1 = list(set(str_1) ^ set(str_2))
+        common = list(set(str_1) & set(str_2)) #Символы которые есть в обоих множествах
+        common1 = list(set(str_1) ^ set(str_2)) #Символы которые есть только в одной из строк
         print(f"Similar character: {common}, Uniq character: {common1}")
 
 
