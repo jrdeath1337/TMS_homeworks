@@ -42,4 +42,4 @@ elif count > 0:
 else:
     print("All systems online")
 
-#Не успел написать коммы
+#Не успел написать коммs
