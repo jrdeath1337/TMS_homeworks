@@ -47,7 +47,7 @@ jobs:
 
   apply:
     runs-on: ubuntu-latest
-    environment: production
+    environment: prod
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     defaults:
       run:
