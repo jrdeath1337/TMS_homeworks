@@ -64,6 +64,6 @@ jobs:
         run: |
           if [ -z "${{ secrets.YC_FOLDER_ID }}" ]; then echo "ERROR: YC_FOLDER_ID secret is empty"; exit 1; fi
           if [ -z "${{ vars.SSH_PUBLIC_KEY }}" ]; then echo "ERROR: SSH_PUBLIC_KEY variable is empty"; exit 1; fi
-          terraform destroy -auto-approve \
+          terraform apply -auto-approve \
           -var="folder_id=${{ secrets.YC_FOLDER_ID }}" \
           -var="ssh_public_key=${{ vars.SSH_PUBLIC_KEY }}"
