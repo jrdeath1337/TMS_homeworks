@@ -8,64 +8,57 @@ on:
 
 env:
   TF_VERSION: 1.6.6
-  TF_ROOT: "terraform_1"
+
 jobs:
-  # 1. Проверка форматирования и валидация
-  terraform-fmt-validate:
-    name: 🔍 Format & Validate
+  validate:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform_1
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
-      - name: Terraform Init
-        run: terraform init
-      - name: Terraform Format
-        run: terraform fmt -check
-      - name: Terraform Validate
-        run: terraform validate
+      - run: terraform init
+      - run: terraform validate
+      - run: terraform fmt -check
 
-  # 2. План (запускается для pull request)
-  terraform-plan:
-    name: 📋 Terraform Plan
+  plan:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    defaults:
+      run:
+        working-directory: terraform_1
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
-      - name: Terraform Init
-        run: terraform init
-      - name: Terraform Plan
-        id: plan
-        run: |
-          terraform plan \
+      - run: terraform init
+      - run: |
+          terraform plan -out=plan.tfplan \
             -var="folder_id=${{ secrets.YC_FOLDER_ID }}" \
-            -var="ssh_public_key=${{ vars.SSH_PUBLIC_KEY }}" \
-            -out=plan.tfplan
+            -var="ssh_public_key=${{ vars.SSH_PUBLIC_KEY }}"
       - uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: plan.tfplan
-          retention-days: 7
+          path: terraform_1/plan.tfplan
 
-  # 3. Apply (только на push в main, с ручным подтверждением через environment)
-  terraform-apply:
-    name: 🚀 Terraform Apply
+  apply:
     runs-on: ubuntu-latest
-    environment: production          # 👈 Ручное подтверждение (требует настройки environment)
+    environment: production
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    defaults:
+      run:
+        working-directory: terraform_1
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
-      - name: Terraform Init
-        run: terraform init
-      - name: Terraform Apply
-        run: |
+      - run: terraform init
+      - run: |
           terraform apply -auto-approve \
             -var="folder_id=${{ secrets.YC_FOLDER_ID }}" \
             -var="ssh_public_key=${{ vars.SSH_PUBLIC_KEY }}"
