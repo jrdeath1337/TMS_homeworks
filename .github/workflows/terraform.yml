@@ -59,6 +59,8 @@ jobs:
           terraform_version: ${{ env.TF_VERSION }}
       - run: terraform init
       - name: Terraform Apply
+        env:
+          YC_TOKEN: ${{ secrets.YC_TOKEN }}
         run: |
           if [ -z "${{ secrets.YC_FOLDER_ID }}" ]; then echo "ERROR: YC_FOLDER_ID secret is empty"; exit 1; fi
           if [ -z "${{ vars.SSH_PUBLIC_KEY }}" ]; then echo "ERROR: SSH_PUBLIC_KEY variable is empty"; exit 1; fi

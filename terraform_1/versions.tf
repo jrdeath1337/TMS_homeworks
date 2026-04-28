@@ -13,7 +13,6 @@ terraform {
 }
 
 provider "yandex" {
-  token     = var.yc_token
   zone      = var.default_zone
   folder_id = var.folder_id
 }
