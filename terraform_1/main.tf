@@ -71,6 +71,6 @@ resource "yandex_compute_instance" "web" {
 
   metadata = {
     user-data = data.template_file.cloud-init.rendered
-    ssh-keys  = "ubuntu:${var.ssh_pablic_key}"
+    ssh-keys  = "ubuntu:${var.ssh_public_key}"
   }
 }
