@@ -16,8 +16,8 @@ variable "image_id" {
   default     = "fd8luipngpka5gjrocrl" # ID образа для Ubuntu 22.04 LTS, уточните в консоли при необходимости
 }
 
-variable "ssh_key_path" {
-  description = "Путь к публичному SSH-ключу"
+variable "ssh_pablic_key" {
+  description = "Публичный SSH-ключ"
   type        = string
 }
 

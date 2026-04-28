@@ -58,7 +58,10 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
       - run: terraform init
-      - run: |
+      - name: Terraform Apply
+        run: |
+          if [ -z "${{ secrets.YC_FOLDER_ID }}" ]; then echo "ERROR: YC_FOLDER_ID secret is empty"; exit 1; fi
+          if [ -z "${{ vars.SSH_PUBLIC_KEY }}" ]; then echo "ERROR: SSH_PUBLIC_KEY variable is empty"; exit 1; fi
           terraform apply -auto-approve \
-            -var="folder_id=${{ secrets.YC_FOLDER_ID }}" \
-            -var="ssh_public_key=${{ vars.SSH_PUBLIC_KEY }}"
+          -var="folder_id=${{ secrets.YC_FOLDER_ID }}" \
+          -var="ssh_public_key=${{ vars.SSH_PUBLIC_KEY }}"
