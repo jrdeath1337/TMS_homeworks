@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+  namespace: hw46
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: yc-network-hdd    # используем HDD
+  resources:
+    requests:
+      storage: 10Gi

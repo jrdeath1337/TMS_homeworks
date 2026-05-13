@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-manager-sa
+  namespace: hw46
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-manager-role
+  namespace: hw46
+rules:
+- apiGroups: [""]                # core API group
+  resources: ["pods"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-manager-binding
+  namespace: hw46
+subjects:
+- kind: ServiceAccount
+  name: pod-manager-sa
+  namespace: hw46
+roleRef:
+  kind: Role
+  name: pod-manager-role
+  apiGroup: rbac.authorization.k8s.io

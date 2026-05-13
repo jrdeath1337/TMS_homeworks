@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-sa
+  namespace: hw46
+  labels:
+    app: nginx          # пригодится для сервисов позже
+spec:
+  serviceAccountName: pod-manager-sa
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
