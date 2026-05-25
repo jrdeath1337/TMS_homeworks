@@ -1,0 +1,35 @@
+# monitoring-values.yaml
+prometheus:
+  prometheusSpec:
+    retention: 7d           # меньше срок хранения
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+
+alertmanager:
+  enabled: false            # для простоты отключаем Alertmanager
+
+grafana:
+  enabled: true
+  adminPassword: "admin123"  # простой пароль для тестов
+  service:
+    type: NodePort           # доступ через порт ноды, если нет Ingress
+    nodePort: 30030
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true

@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  postgres-server:
+    image: postgres:14-alpine
+    container_name: zabbix-postgres
+    environment:
+      POSTGRES_DB: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix_pwd
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - zbx-net
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:6.0-ubuntu-latest
+    container_name: zabbix-server
+    environment:
+      DB_SERVER_HOST: postgres-server
+      POSTGRES_DB: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix_pwd
+      ZBX_STARTREPORTWRITERS: "1"
+      ZBX_WEBSERVICEURL: "http://zabbix-web-service:10053/report"
+    depends_on:
+      - postgres-server
+    ports:
+      - "10051:10051"   # для активных агентов
+    networks:
+      - zbx-net
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:6.0-ubuntu-latest
+    container_name: zabbix-web
+    environment:
+      DB_SERVER_HOST: postgres-server
+      POSTGRES_DB: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix_pwd
+      ZBX_SERVER_HOST: zabbix-server
+      PHP_TZ: "Europe/Minsk"
+    depends_on:
+      - postgres-server
+      - zabbix-server
+    ports:
+      - "8080:8080"
+    networks:
+      - zbx-net
+
+  zabbix-agent2:
+    image: zabbix/zabbix-agent2:6.0-ubuntu-latest
+    container_name: zabbix-agent2
+    environment:
+      ZBX_HOSTNAME: "docker-agent"
+      ZBX_SERVER_HOST: "zabbix-server"
+      ZBX_SERVER_PORT: 10051
+      ZBX_PASSIVE_ALLOW: "true"  # разрешаем пассивные проверки
+    ports:
+      - "10050:10050"
+    networks:
+      - zbx-net
+
+  # Почтовый сервер для тестирования оповещений (MailHog)
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"   # веб-интерфейс
+      - "1025:1025"   # SMTP
+    networks:
+      - zbx-net
+
+networks:
+  zbx-net:
+    driver: bridge
+
+volumes:
+  pgdata:

@@ -1,0 +1,13 @@
+# pvc-ssd.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc-ssd
+  namespace: hw46
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: yc-network-ssd    # меняем на SSD
+  resources:
+    requests:
+      storage: 20Gi                   # размер можно и увеличить

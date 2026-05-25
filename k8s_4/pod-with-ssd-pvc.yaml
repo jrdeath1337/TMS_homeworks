@@ -1,0 +1,20 @@
+# pod-with-ssd-pvc.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-pod-ssd
+  namespace: hw46
+spec:
+  containers:
+  - name: writer
+    image: busybox
+    command: ["/bin/sh", "-c"]
+    args:
+      - "echo 'Data on SSD' > /data/ssd.txt && sleep 3600"
+    volumeMounts:
+    - name: data-vol
+      mountPath: /data
+  volumes:
+  - name: data-vol
+    persistentVolumeClaim:
+      claimName: my-pvc-ssd
